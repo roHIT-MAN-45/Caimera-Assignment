@@ -77,7 +77,7 @@ body {
 .blob-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, #d4a84b 0%, transparent 70%);
+  background: radial-gradient(circle, #7b9fbf 0%, transparent 70%);
   bottom: -150px;
   right: -150px;
   animation: drift2 28s ease-in-out infinite alternate;
