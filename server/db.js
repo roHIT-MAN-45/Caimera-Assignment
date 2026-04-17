@@ -1,5 +1,6 @@
 import Database from "better-sqlite3";
 
+// create or open local database file
 const db = new Database("quiz.db");
 
 // create scores table if it does not exist
@@ -10,7 +11,7 @@ db.prepare(
   )`,
 ).run();
 
-// prepare statements once at startup for reuse and performance
+// prepare queries once for better performance
 const stmtInsert = db.prepare(
   `INSERT OR IGNORE INTO scores (username, wins) VALUES (?, 0)`,
 );
@@ -23,13 +24,13 @@ const stmtTopScores = db.prepare(
   `SELECT username, wins FROM scores ORDER BY wins DESC LIMIT 10`,
 );
 
-// insert user if new, then increment their win count
+// add user if not present then increase win count
 export function incrementScore(username) {
   stmtInsert.run(username);
   stmtIncrement.run(username);
 }
 
-// fetch the top 10 players ordered by wins descending
+// return top 10 players sorted by wins
 export function getTopScores() {
   return stmtTopScores.all();
 }

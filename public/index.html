@@ -1,27 +1,38 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- basic page setup and metadata -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mathly — First to answer wins</title>
+
+    <!-- load fonts for styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <!-- main stylesheet -->
     <link rel="stylesheet" href="style.css" />
+
+    <!-- socket io for realtime communication -->
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+    <!-- main client script -->
     <script src="client.js" defer></script>
   </head>
 
   <body>
+    <!-- animated background visuals -->
     <div class="bg-canvas" aria-hidden="true">
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
       <div class="blob blob-3"></div>
     </div>
 
+    <!-- top header with branding and player count -->
     <header>
       <div class="brand">
         <div class="brand-mark">M</div>
@@ -30,6 +41,8 @@
           <p class="brand-tag">First to answer wins</p>
         </div>
       </div>
+
+      <!-- show number of connected players -->
       <div id="player-count">
         <span class="pulse-dot"></span>
         <span id="count-label">0 players</span>
@@ -37,12 +50,16 @@
     </header>
 
     <main>
+      <!-- join screen before entering game -->
       <section id="join-screen">
         <div class="join-icon" aria-hidden="true">∑</div>
+
         <h2>Ready to compete?</h2>
         <p class="join-sub">
           Jump into the live arena — answer fast, climb the board
         </p>
+
+        <!-- username input -->
         <input
           id="username-input"
           type="text"
@@ -50,6 +67,8 @@
           maxlength="20"
           autocomplete="off"
         />
+
+        <!-- join button -->
         <button id="join-btn">
           <span>Join Game</span>
           <svg
@@ -68,15 +87,23 @@
             />
           </svg>
         </button>
+
+        <!-- error message for invalid join -->
         <p id="join-error" role="alert"></p>
       </section>
 
+      <!-- main game screen -->
       <section id="game-screen" hidden>
+        <!-- question difficulty and hint -->
         <div class="question-meta">
           <p id="question-difficulty"></p>
           <span class="question-hint">solve it</span>
         </div>
+
+        <!-- question display -->
         <div id="question-display"></div>
+
+        <!-- answer input and submit button -->
         <div class="answer-row">
           <div class="answer-wrap">
             <span class="answer-prefix">=</span>
@@ -87,6 +114,7 @@
               autocomplete="off"
             />
           </div>
+
           <button id="submit-btn">
             <svg
               width="18"
@@ -105,21 +133,27 @@
             </svg>
           </button>
         </div>
+
+        <!-- result message and countdown -->
         <div class="feedback-row">
           <p id="result-msg" role="status"></p>
           <p id="countdown"></p>
         </div>
       </section>
 
+      <!-- leaderboard section -->
       <section id="leaderboard">
         <div class="section-header">
           <p class="section-label">Leaderboard</p>
           <div class="section-line"></div>
         </div>
+
+        <!-- list of top players -->
         <ol id="board-list"></ol>
       </section>
     </main>
 
+    <!-- connection status at bottom -->
     <footer>
       <span id="status-dot" class="status-dot disconnected"></span>
       <span id="status-text">Disconnected</span>

@@ -5,24 +5,24 @@ const HARD_MAX = 10;
 const HARD_MIN = 2;
 const TIERS = ["easy", "medium", "hard"];
 
-// pick a random integer between min and max inclusive
+// return a random number between min and max
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// pick one item randomly from an array
+// return a random item from a list
 function pick(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-// build an easy addition or subtraction question using numbers 1 to 20
+// create an easy question using addition or subtraction
 function buildEasy() {
   const operator = pick(["+", "-"]);
   const a = randomInt(1, EASY_MAX);
   const b = randomInt(1, EASY_MAX);
 
   if (operator === "-") {
-    // put the larger number first so the answer is never negative
+    // keep result non negative by ordering numbers
     const big = Math.max(a, b);
     const small = Math.min(a, b);
     return { text: `${big} - ${small}`, answer: big - small };
@@ -31,7 +31,7 @@ function buildEasy() {
   return { text: `${a} + ${b}`, answer: a + b };
 }
 
-// build a medium multiplication or whole-number division question
+// create a medium question using multiplication or division
 function buildMedium() {
   const operator = pick(["*", "/"]);
 
@@ -41,21 +41,23 @@ function buildMedium() {
     return { text: `${a} × ${b}`, answer: a * b };
   }
 
-  // build division from the answer backward to guarantee a whole result
+  // build division so result is always a whole number
   const divisor = randomInt(MEDIUM_MIN, MEDIUM_MAX);
   const quotient = randomInt(MEDIUM_MIN, MEDIUM_MAX);
   const dividend = divisor * quotient;
+
   return { text: `${dividend} ÷ ${divisor}`, answer: quotient };
 }
 
-// build a hard order-of-operations question using three numbers
+// create a hard question with order of operations
 function buildHard() {
   const a = randomInt(HARD_MIN, HARD_MAX);
   const b = randomInt(HARD_MIN, HARD_MAX);
   const c = randomInt(HARD_MIN, HARD_MAX);
+
   const product = a * b;
 
-  // clamp c so the subtraction pattern never produces a negative answer
+  // adjust value to avoid negative results
   const safeC = c < product ? c : randomInt(1, product - 1);
 
   const patterns = [
@@ -67,18 +69,22 @@ function buildHard() {
   return pick(patterns);
 }
 
+// map difficulty level to builder function
 const builders = { easy: buildEasy, medium: buildMedium, hard: buildHard };
 
-// generate a question at a random difficulty tier and attach the tier label
+// generate a question with a random difficulty level
 export function generateQuestion() {
   const tier = pick(TIERS);
   return { ...builders[tier](), tier };
 }
 
-// parse and compare the submitted answer against the correct number
+// check if submitted answer matches correct answer
 export function checkAnswer(submitted, correct) {
   const value = submitted?.trim();
+
   if (!value) return false;
+
   const parsed = Number(value);
+
   return !Number.isNaN(parsed) && parsed === correct;
 }

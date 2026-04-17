@@ -1,11 +1,11 @@
 import { incrementScore, getTopScores } from "./db.js";
 
-// record a win for the given username
+// increase score for a player after a win
 export function saveWin(username) {
   incrementScore(username);
 }
 
-// return the current top 10 leaderboard
+// return current top players leaderboard
 export function getLeaderboard() {
   return getTopScores();
 }
