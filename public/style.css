@@ -2,7 +2,6 @@
 :root {
   --bg: #0f0f14;
   --card: rgba(255, 255, 255, 0.04);
-  --card-hover: rgba(255, 255, 255, 0.06);
   --border: rgba(255, 255, 255, 0.08);
   --border-focus: rgba(123, 159, 191, 0.5);
   --text: #f0ede8;
@@ -375,7 +374,8 @@ input[type="number"] {
 }
 
 @keyframes shake {
-  0% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   20% {
@@ -389,9 +389,6 @@ input[type="number"] {
   }
   80% {
     transform: translateX(4px);
-  }
-  100% {
-    transform: translateX(0);
   }
 }
 
@@ -620,6 +617,10 @@ input[type="number"] {
     border-color 0.2s;
   opacity: 0;
 }
+#board-list li:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
 
 #board-list li.animate-in {
   animation: listIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -650,33 +651,26 @@ input[type="number"] {
 #board-list li:nth-child(8).animate-in {
   animation-delay: 0.35s;
 }
-#board-list li:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-}
 
 /* rank 1 gold */
 #board-list li:nth-child(1) {
-  background: rgba(212, 168, 75, 0.1) !important;
-  border-color: rgba(212, 168, 75, 0.4) !important;
-  border-left: 3px solid var(--gold) !important;
-  box-shadow: 0 2px 14px rgba(212, 168, 75, 0.12);
+  background: rgba(212, 168, 75, 0.05) !important;
+  border-color: rgba(212, 168, 75, 0.18) !important;
+  border-left: 3px solid rgba(212, 168, 75, 0.55) !important;
 }
 
 /* rank 2 silver */
 #board-list li:nth-child(2) {
-  background: rgba(168, 196, 220, 0.11) !important;
-  border-color: rgba(168, 196, 220, 0.42) !important;
-  border-left: 3px solid var(--silver) !important;
-  box-shadow: 0 1px 14px rgba(160, 200, 230, 0.14);
+  background: rgba(168, 196, 220, 0.04) !important;
+  border-color: rgba(168, 196, 220, 0.16) !important;
+  border-left: 3px solid rgba(168, 196, 220, 0.45) !important;
 }
 
 /* rank 3 bronze */
 #board-list li:nth-child(3) {
-  background: rgba(196, 132, 90, 0.13) !important;
-  border-color: rgba(196, 132, 90, 0.42) !important;
-  border-left: 3px solid var(--bronze) !important;
-  box-shadow: 0 1px 14px rgba(196, 132, 90, 0.14);
+  background: rgba(196, 132, 90, 0.05) !important;
+  border-color: rgba(196, 132, 90, 0.18) !important;
+  border-left: 3px solid rgba(196, 132, 90, 0.5) !important;
 }
 
 /* rank badge */
@@ -691,16 +685,13 @@ input[type="number"] {
   flex-shrink: 0;
 }
 #board-list li:nth-child(1) .rank {
-  color: var(--gold);
-  text-shadow: 0 0 8px rgba(212, 168, 75, 0.6);
-  font-weight: 800;
+  color: rgba(212, 168, 75, 0.85);
 }
 #board-list li:nth-child(2) .rank {
-  color: var(--silver);
-  text-shadow: 0 0 6px rgba(168, 196, 220, 0.4);
+  color: rgba(168, 196, 220, 0.75);
 }
 #board-list li:nth-child(3) .rank {
-  color: var(--bronze);
+  color: rgba(196, 132, 90, 0.8);
 }
 
 /* player name */
@@ -732,19 +723,19 @@ input[type="number"] {
   font-variant-numeric: tabular-nums;
 }
 #board-list li:nth-child(1) .wins-pill {
-  color: var(--gold);
-  background: rgba(212, 168, 75, 0.1);
-  border-color: rgba(212, 168, 75, 0.2);
+  color: rgba(212, 168, 75, 0.75);
+  background: rgba(212, 168, 75, 0.06);
+  border-color: rgba(212, 168, 75, 0.14);
 }
 #board-list li:nth-child(2) .wins-pill {
-  color: var(--silver);
-  background: rgba(168, 196, 220, 0.1);
-  border-color: rgba(168, 196, 220, 0.2);
+  color: rgba(168, 196, 220, 0.7);
+  background: rgba(168, 196, 220, 0.05);
+  border-color: rgba(168, 196, 220, 0.12);
 }
 #board-list li:nth-child(3) .wins-pill {
-  color: var(--bronze);
-  background: rgba(196, 132, 90, 0.1);
-  border-color: rgba(196, 132, 90, 0.18);
+  color: rgba(196, 132, 90, 0.75);
+  background: rgba(196, 132, 90, 0.06);
+  border-color: rgba(196, 132, 90, 0.12);
 }
 
 /* current user highlight — does NOT override podium border-left */
@@ -755,7 +746,6 @@ input[type="number"] {
 }
 #board-list li.me .rank {
   color: var(--accent) !important;
-  text-shadow: none !important;
 }
 #board-list li.me .player-name {
   color: var(--accent);
@@ -767,26 +757,24 @@ input[type="number"] {
   border-color: rgba(123, 159, 191, 0.25) !important;
 }
 
-/* podium + me combined: keep the podium glow even for the current user */
+/* podium + me combined: keep the podium identity even for the current user */
 #board-list li:nth-child(1).me {
-  background: rgba(212, 168, 75, 0.1) !important;
-  border-left: 3px solid var(--gold) !important;
-  box-shadow: 0 2px 14px rgba(212, 168, 75, 0.18) !important;
+  background: rgba(212, 168, 75, 0.07) !important;
+  border-left: 3px solid rgba(212, 168, 75, 0.55) !important;
 }
 #board-list li:nth-child(1).me .rank {
-  color: var(--gold) !important;
-  text-shadow: 0 0 8px rgba(212, 168, 75, 0.6) !important;
+  color: rgba(212, 168, 75, 0.85) !important;
 }
 #board-list li:nth-child(1).me .wins-pill {
-  color: var(--gold) !important;
-  background: rgba(212, 168, 75, 0.12) !important;
-  border-color: rgba(212, 168, 75, 0.25) !important;
+  color: rgba(212, 168, 75, 0.75) !important;
+  background: rgba(212, 168, 75, 0.06) !important;
+  border-color: rgba(212, 168, 75, 0.14) !important;
 }
 #board-list li:nth-child(2).me {
-  border-left: 3px solid var(--silver) !important;
+  border-left: 3px solid rgba(168, 196, 220, 0.45) !important;
 }
 #board-list li:nth-child(3).me {
-  border-left: 3px solid var(--bronze) !important;
+  border-left: 3px solid rgba(196, 132, 90, 0.5) !important;
 }
 
 /* empty state */
