@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mathly — First to answer wins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="client.js" defer></script>
+  </head>
+
+  <body>
+    <div class="bg-canvas" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <header>
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div>
+          <p class="brand-name">Mathly</p>
+          <p class="brand-tag">First to answer wins</p>
+        </div>
+      </div>
+      <div id="player-count">
+        <span class="pulse-dot"></span>
+        <span id="count-label">0 players</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="join-screen">
+        <div class="join-icon" aria-hidden="true">∑</div>
+        <h2>Ready to compete?</h2>
+        <p class="join-sub">
+          Jump into the live arena — answer fast, climb the board
+        </p>
+        <input
+          id="username-input"
+          type="text"
+          placeholder="Your name"
+          maxlength="20"
+          autocomplete="off"
+        />
+        <button id="join-btn">
+          <span>Join Game</span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <p id="join-error" role="alert"></p>
+      </section>
+
+      <section id="game-screen" hidden>
+        <div class="question-meta">
+          <p id="question-difficulty"></p>
+          <span class="question-hint">solve it</span>
+        </div>
+        <div id="question-display"></div>
+        <div class="answer-row">
+          <div class="answer-wrap">
+            <span class="answer-prefix">=</span>
+            <input
+              id="answer-input"
+              type="number"
+              placeholder="your answer"
+              autocomplete="off"
+            />
+          </div>
+          <button id="submit-btn">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 9h10M10 5l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="feedback-row">
+          <p id="result-msg" role="status"></p>
+          <p id="countdown"></p>
+        </div>
+      </section>
+
+      <section id="leaderboard">
+        <div class="section-header">
+          <p class="section-label">Leaderboard</p>
+          <div class="section-line"></div>
+        </div>
+        <ol id="board-list"></ol>
+      </section>
+    </main>
+
+    <footer>
+      <span id="status-dot" class="status-dot disconnected"></span>
+      <span id="status-text">Disconnected</span>
+    </footer>
+  </body>
+</html>

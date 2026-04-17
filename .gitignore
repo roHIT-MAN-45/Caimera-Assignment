@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# environment
+.env
+
+# database
+*.db
+
+# claude
+.claude/
+
+# os
+.DS_Store
+Thumbs.db
+
+# editors
+.vscode/
+.idea/
+*.swp
+*.swo
