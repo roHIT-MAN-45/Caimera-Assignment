@@ -615,9 +615,7 @@ input[type="number"] {
   border-left: 3px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   font-size: 0.875rem;
-  transition:
-    background 0.2s,
-    transform 0.15s;
+  transition: background 0.2s, border-color 0.2s;
   opacity: 0;
 }
 
@@ -653,73 +651,30 @@ input[type="number"] {
 #board-list li:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
-  transform: translateX(2px);
 }
 
-/* rank 1 gold with shimmer */
+/* rank 1 gold */
 #board-list li:nth-child(1) {
-  background: linear-gradient(
-    100deg,
-    rgba(212, 168, 75, 0.22) 0%,
-    rgba(255, 210, 100, 0.12) 50%,
-    rgba(212, 168, 75, 0.1) 100%
-  ) !important;
-  border-color: rgba(212, 168, 75, 0.35) !important;
+  background: rgba(212, 168, 75, 0.1) !important;
+  border-color: rgba(212, 168, 75, 0.4) !important;
   border-left: 3px solid var(--gold) !important;
-  box-shadow:
-    0 0 0 0.5px rgba(212, 168, 75, 0.15) inset,
-    0 2px 16px rgba(212, 168, 75, 0.15);
-  position: relative;
-  overflow: hidden;
-}
-#board-list li:nth-child(1)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 220, 120, 0.12) 50%,
-    transparent 70%
-  );
-  background-size: 200% 100%;
-  animation: goldShimmer 3.5s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes goldShimmer {
-  0% {
-    background-position: -100% 0;
-  }
-  60%,
-  100% {
-    background-position: 200% 0;
-  }
+  box-shadow: 0 2px 14px rgba(212, 168, 75, 0.12);
 }
 
-/* rank 2 silver-blue */
+/* rank 2 silver */
 #board-list li:nth-child(2) {
-  background: linear-gradient(
-    100deg,
-    rgba(168, 196, 220, 0.16) 0%,
-    rgba(210, 225, 245, 0.09) 50%,
-    rgba(155, 170, 184, 0.07) 100%
-  ) !important;
-  border-color: rgba(168, 196, 220, 0.3) !important;
+  background: rgba(168, 196, 220, 0.08) !important;
+  border-color: rgba(168, 196, 220, 0.32) !important;
   border-left: 3px solid var(--silver) !important;
-  box-shadow: 0 1px 10px rgba(160, 200, 230, 0.1);
+  box-shadow: 0 1px 10px rgba(160, 200, 230, 0.08);
 }
 
-/* rank 3 copper-bronze */
+/* rank 3 bronze */
 #board-list li:nth-child(3) {
-  background: linear-gradient(
-    100deg,
-    rgba(196, 132, 90, 0.18) 0%,
-    rgba(220, 155, 100, 0.1) 50%,
-    rgba(180, 110, 70, 0.07) 100%
-  ) !important;
-  border-color: rgba(196, 132, 90, 0.28) !important;
+  background: rgba(196, 132, 90, 0.09) !important;
+  border-color: rgba(196, 132, 90, 0.32) !important;
   border-left: 3px solid var(--bronze) !important;
-  box-shadow: 0 1px 10px rgba(196, 132, 90, 0.1);
+  box-shadow: 0 1px 10px rgba(196, 132, 90, 0.08);
 }
 
 /* rank badge */
