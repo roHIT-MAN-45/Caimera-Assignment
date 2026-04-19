@@ -135,6 +135,11 @@ function submit() {
   answerInput.value = "";
 }
 
+// reflect latency ping immediately for RTT measurement
+socket.on("latency-ping", (sentAt) => {
+  socket.emit("latency-pong", sentAt);
+});
+
 // receive current question on join
 socket.on("current-question", (data) => {
   if (!isJoined) {
