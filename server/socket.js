@@ -3,8 +3,15 @@ import { saveWin, getLeaderboard } from "./scores.js";
 
 const ROUND_PAUSE_MS = 5000;
 const ROUND_PAUSE_SECONDS = 5;
+
 // TODO: remove before deploy — change back to 150 for production
 const ANSWER_WINDOW_MS = 3000;
+
+// how often to re-measure RTT per player (ms)
+const RTT_INTERVAL_MS = 10_000;
+
+// how many recent samples to average for a stable RTT estimate
+const RTT_SAMPLE_SIZE = 5;
 
 // current game state for one active game
 let question = generateQuestion();
@@ -19,13 +26,25 @@ const players = new Map();
 // register all socket events
 export function registerHandlers(io) {
   io.on("connection", (socket) => {
-    // measure round-trip time immediately on connection
-    socket.emit("latency-ping", Date.now());
-    socket.on("latency-pong", (sentAt) => {
-      socket.rtt = Date.now() - sentAt;
+    // measure round-trip time immediately and keep re-measuring so RTT stays
+    // accurate if the player's network improves or degrades mid-session
+    socket.rttSamples = [];
 
-      // TODO: remove before deploy — debug log
-      console.log(`RTT for socket ${socket.id}: ${socket.rtt}ms`);
+    const ping = () => socket.emit("latency-ping", Date.now());
+    ping();
+
+    // re-measure on a fixed interval for the lifetime of this connection
+    const rttInterval = setInterval(ping, RTT_INTERVAL_MS);
+
+    socket.on("latency-pong", (sentAt) => {
+      // rolling window — drop the oldest sample once the limit is reached
+      socket.rttSamples.push(Date.now() - sentAt);
+      if (socket.rttSamples.length > RTT_SAMPLE_SIZE) socket.rttSamples.shift();
+
+      // average the window to smooth out transient jitter spikes
+      socket.rtt = Math.round(
+        socket.rttSamples.reduce((a, b) => a + b, 0) / socket.rttSamples.length,
+      );
     });
 
     // handle player joining and send current game data
@@ -198,6 +217,9 @@ export function registerHandlers(io) {
 
     // handle player disconnect and update count
     socket.on("disconnect", () => {
+      // stop pinging a socket that is no longer connected
+      clearInterval(rttInterval);
+
       if (!socket.username) return;
 
       // only remove if this socket owns the username
